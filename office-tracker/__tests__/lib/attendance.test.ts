@@ -47,10 +47,12 @@ describe('computeStats', () => {
   })
 
   it('stillNeeded is 0 when target already met', () => {
-    const fullEvents: CalendarEvent[] = Array.from({ length: 12 }, (_, i) => ({
-      date: `2026-05-${String(i + 4).padStart(2, '0')}`,
-      title: 'office',
-    }))
+    // 12 valid working days = ceil(0.6 * 20) target exactly met
+    const fullEvents: CalendarEvent[] = [
+      '2026-05-04', '2026-05-05', '2026-05-06', '2026-05-07', '2026-05-08',
+      '2026-05-11', '2026-05-12', '2026-05-13', '2026-05-14', '2026-05-15',
+      '2026-05-18', '2026-05-19',
+    ].map(date => ({ date, title: 'office' }))
     const stats = computeStats(2026, 5, fullEvents, holidays, 0.6, today)
     expect(stats.stillNeeded).toBe(0)
   })

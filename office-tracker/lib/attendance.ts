@@ -30,7 +30,8 @@ export function computeStats(
 ): AttendanceStats {
   const holidayDates = new Set(holidays.map(h => h.date))
   const workingDays = getWeekdays(year, month).filter(d => !holidayDates.has(d))
-  const attended = events.map(e => e.date)
+  const attendedSet = new Set(events.map(e => e.date))
+  const attended = workingDays.filter(d => attendedSet.has(d))
   const attendedCount = attended.length
   const attendancePct = workingDays.length > 0 ? attendedCount / workingDays.length : 0
   const targetCount = Math.ceil(targetPct * workingDays.length)
