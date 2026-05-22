@@ -12,7 +12,9 @@ export async function GET(req: NextRequest) {
   const month = searchParams.get('month')
   const keyword = searchParams.get('keyword') ?? 'office'
 
-  if (!month) return NextResponse.json({ error: 'month required' }, { status: 400 })
+  if (!month || !/^\d{4}-\d{2}$/.test(month)) {
+    return NextResponse.json({ error: 'month must be YYYY-MM' }, { status: 400 })
+  }
 
   const [year, mon] = month.split('-').map(Number)
   const timeMin = new Date(year, mon - 1, 1).toISOString()
@@ -22,14 +24,21 @@ export async function GET(req: NextRequest) {
   auth.setCredentials({ access_token: session.accessToken })
   const calendar = google.calendar({ version: 'v3', auth })
 
-  const res = await calendar.events.list({
-    calendarId: 'primary',
-    timeMin,
-    timeMax,
-    q: keyword,
-    singleEvents: true,
-    orderBy: 'startTime',
-  })
+  let res
+  try {
+    res = await calendar.events.list({
+      calendarId: 'primary',
+      timeMin,
+      timeMax,
+      q: keyword,
+      singleEvents: true,
+      orderBy: 'startTime',
+    })
+  } catch (err: unknown) {
+    const status = (err as { status?: number }).status
+    if (status === 401) return NextResponse.json({ error: 'Google auth expired' }, { status: 401 })
+    return NextResponse.json({ error: 'Calendar API error' }, { status: 502 })
+  }
 
   const events: CalendarEvent[] = (res.data.items ?? [])
     .filter(e => e.start?.date || e.start?.dateTime)
