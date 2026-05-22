@@ -7,6 +7,7 @@ export function Nav() {
   const link = (href: string, label: string) => (
     <Link
       href={href}
+      aria-current={pathname === href ? 'page' : undefined}
       className={`text-sm px-4 py-1.5 rounded-md transition-colors ${
         pathname === href
           ? 'bg-blue-700 text-white'
