@@ -5,7 +5,7 @@ export function weatherScore(day: WeatherDay): number {
   score -= day.precipProbability * 0.6   // precipProbability is 0–100; max 60 penalty
   if (day.tempMax > 38) score -= 20
   if (day.weatherCode >= 80) score -= 40
-  return score
+  return Math.max(0, score)
 }
 
 export function getWmoIcon(weatherCode: number): string {
@@ -23,7 +23,7 @@ export function getRecommendations(
   forecast: WeatherDay[],
   count: number
 ): Recommendation[] {
-  if (count === 0) return []
+  if (count <= 0) return []
   const forecastMap = new Map(forecast.map(f => [f.date, f]))
   return remaining
     .filter(d => forecastMap.has(d))
