@@ -1,0 +1,236 @@
+<h2>Dashboard Layout Options</h2>
+<p class="subtitle">Which layout feels right for the Office Days tracker?</p>
+
+<div class="cards">
+
+  <!-- Option A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;padding:16px;font-family:system-ui,sans-serif;border-radius:8px 8px 0 0;">
+      <!-- Layout A: Vertical Stack -->
+      <div style="background:#1e293b;border-radius:8px;padding:12px 14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="color:#94a3b8;font-size:11px;font-weight:600;letter-spacing:.05em">OFFICE DAYS</span>
+        <span style="color:#64748b;font-size:10px">May 2026</span>
+      </div>
+
+      <!-- Stat row -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:10px;">
+        <div style="background:#1e293b;border-radius:6px;padding:8px;text-align:center;">
+          <div style="color:#38bdf8;font-size:16px;font-weight:700">8</div>
+          <div style="color:#64748b;font-size:8px">Attended</div>
+        </div>
+        <div style="background:#1e293b;border-radius:6px;padding:8px;text-align:center;">
+          <div style="color:#a78bfa;font-size:16px;font-weight:700">47%</div>
+          <div style="color:#64748b;font-size:8px">This month</div>
+        </div>
+        <div style="background:#1e293b;border-radius:6px;padding:8px;text-align:center;">
+          <div style="color:#f59e0b;font-size:16px;font-weight:700">60%</div>
+          <div style="color:#64748b;font-size:8px">Target</div>
+        </div>
+        <div style="background:#1e293b;border-radius:6px;padding:8px;text-align:center;">
+          <div style="color:#fb7185;font-size:16px;font-weight:700">3</div>
+          <div style="color:#64748b;font-size:8px">Needed</div>
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div style="background:#1e293b;border-radius:6px;padding:8px 10px;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+          <span style="color:#94a3b8;font-size:9px">Progress to 60%</span>
+          <span style="color:#38bdf8;font-size:9px">47%</span>
+        </div>
+        <div style="background:#334155;border-radius:4px;height:6px;position:relative;">
+          <div style="background:linear-gradient(90deg,#38bdf8,#818cf8);border-radius:4px;height:6px;width:47%"></div>
+          <div style="position:absolute;top:-2px;left:60%;width:1px;height:10px;background:#f59e0b;border-radius:1px"></div>
+        </div>
+      </div>
+
+      <!-- Calendar heatmap -->
+      <div style="background:#1e293b;border-radius:6px;padding:8px 10px;margin-bottom:10px;">
+        <div style="color:#94a3b8;font-size:9px;margin-bottom:6px;font-weight:600">MAY 2026</div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;">
+          <div style="color:#475569;font-size:7px;text-align:center">Mo</div>
+          <div style="color:#475569;font-size:7px;text-align:center">Tu</div>
+          <div style="color:#475569;font-size:7px;text-align:center">We</div>
+          <div style="color:#475569;font-size:7px;text-align:center">Th</div>
+          <div style="color:#475569;font-size:7px;text-align:center">Fr</div>
+          <div style="color:#334155;font-size:7px;text-align:center">Sa</div>
+          <div style="color:#334155;font-size:7px;text-align:center">Su</div>
+
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#0ea5e9;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#1e293b;border-radius:2px;height:12px;"></div>
+          <div style="background:#1e293b;border-radius:2px;height:12px;"></div>
+
+          <div style="background:#0ea5e9;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#f59e0b;border-radius:2px;height:12px;opacity:.6"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#0ea5e9;border-radius:2px;height:12px;"></div>
+          <div style="background:#1e293b;border-radius:2px;height:12px;"></div>
+          <div style="background:#1e293b;border-radius:2px;height:12px;"></div>
+
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#0ea5e9;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;border:1px solid #38bdf8;height:12px;"></div>
+          <div style="background:#1e293b;border-radius:2px;height:12px;"></div>
+          <div style="background:#1e293b;border-radius:2px;height:12px;"></div>
+        </div>
+      </div>
+
+      <!-- Recommendations -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
+        <div style="background:#1e293b;border-radius:6px;padding:7px;text-align:center;">
+          <div style="font-size:14px">☀️</div>
+          <div style="color:#e2e8f0;font-size:8px;font-weight:600">Tue 26</div>
+          <div style="color:#64748b;font-size:7px">28°C · 5%</div>
+          <div style="background:#22c55e;border-radius:3px;color:#fff;font-size:7px;padding:2px 4px;margin-top:3px">Go!</div>
+        </div>
+        <div style="background:#1e293b;border-radius:6px;padding:7px;text-align:center;">
+          <div style="font-size:14px">⛅</div>
+          <div style="color:#e2e8f0;font-size:8px;font-weight:600">Thu 28</div>
+          <div style="color:#64748b;font-size:7px">26°C · 15%</div>
+          <div style="background:#22c55e;border-radius:3px;color:#fff;font-size:7px;padding:2px 4px;margin-top:3px">Go!</div>
+        </div>
+        <div style="background:#1e293b;border-radius:6px;padding:7px;text-align:center;">
+          <div style="font-size:14px">🌧️</div>
+          <div style="color:#e2e8f0;font-size:8px;font-weight:600">Fri 29</div>
+          <div style="color:#64748b;font-size:7px">24°C · 70%</div>
+          <div style="background:#f59e0b;border-radius:3px;color:#fff;font-size:7px;padding:2px 4px;margin-top:3px">Maybe</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Vertical Stack</h3>
+      <p>Stats row → progress bar → calendar heatmap → weather cards. Linear top-to-bottom flow, easy to scan on mobile.</p>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;padding:16px;font-family:system-ui,sans-serif;border-radius:8px 8px 0 0;">
+      <!-- Layout B: Donut + sidebar -->
+      <div style="background:#1e293b;border-radius:8px;padding:8px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="color:#94a3b8;font-size:11px;font-weight:600;letter-spacing:.05em">OFFICE DAYS</span>
+        <span style="color:#64748b;font-size:10px">May 2026  ◂ ▸</span>
+      </div>
+
+      <!-- Two column: donut + stats -->
+      <div style="display:grid;grid-template-columns:90px 1fr;gap:8px;margin-bottom:8px;">
+        <!-- Donut -->
+        <div style="background:#1e293b;border-radius:8px;padding:8px;display:flex;align-items:center;justify-content:center;">
+          <div style="position:relative;width:60px;height:60px;">
+            <svg viewBox="0 0 60 60" style="transform:rotate(-90deg)">
+              <circle cx="30" cy="30" r="22" fill="none" stroke="#334155" stroke-width="8"/>
+              <circle cx="30" cy="30" r="22" fill="none" stroke="#38bdf8" stroke-width="8"
+                stroke-dasharray="138" stroke-dashoffset="73" stroke-linecap="round"/>
+              <circle cx="30" cy="30" r="22" fill="none" stroke="#f59e0b" stroke-width="2"
+                stroke-dasharray="3 135" stroke-dashoffset="55" opacity=".8"/>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+              <span style="color:#38bdf8;font-size:12px;font-weight:700">47%</span>
+              <span style="color:#64748b;font-size:7px">of 60%</span>
+            </div>
+          </div>
+        </div>
+        <!-- Stats -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+          <div style="background:#1e293b;border-radius:6px;padding:7px;">
+            <div style="color:#64748b;font-size:7px">Attended</div>
+            <div style="color:#e2e8f0;font-size:14px;font-weight:700">8 <span style="font-size:8px;color:#64748b">days</span></div>
+          </div>
+          <div style="background:#1e293b;border-radius:6px;padding:7px;">
+            <div style="color:#64748b;font-size:7px">Working days</div>
+            <div style="color:#e2e8f0;font-size:14px;font-weight:700">17 <span style="font-size:8px;color:#64748b">total</span></div>
+          </div>
+          <div style="background:#1e293b;border-radius:6px;padding:7px;">
+            <div style="color:#64748b;font-size:7px">Remaining</div>
+            <div style="color:#e2e8f0;font-size:14px;font-weight:700">9 <span style="font-size:8px;color:#64748b">days</span></div>
+          </div>
+          <div style="background:#fb7185;border-radius:6px;padding:7px;">
+            <div style="color:#ffe4e6;font-size:7px">Still needed</div>
+            <div style="color:#fff;font-size:14px;font-weight:700">3 <span style="font-size:8px;opacity:.8">more</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Heatmap full width -->
+      <div style="background:#1e293b;border-radius:6px;padding:8px 10px;margin-bottom:8px;">
+        <div style="color:#94a3b8;font-size:9px;margin-bottom:5px;font-weight:600">MAY 2026</div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;">
+          <div style="color:#475569;font-size:7px;text-align:center">Mo</div>
+          <div style="color:#475569;font-size:7px;text-align:center">Tu</div>
+          <div style="color:#475569;font-size:7px;text-align:center">We</div>
+          <div style="color:#475569;font-size:7px;text-align:center">Th</div>
+          <div style="color:#475569;font-size:7px;text-align:center">Fr</div>
+          <div style="color:#334155;font-size:7px;text-align:center">Sa</div>
+          <div style="color:#334155;font-size:7px;text-align:center">Su</div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#0ea5e9;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#1e293b;border-radius:2px;height:12px;"></div>
+          <div style="background:#1e293b;border-radius:2px;height:12px;"></div>
+          <div style="background:#0ea5e9;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#f59e0b;border-radius:2px;height:12px;opacity:.5"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#0ea5e9;border-radius:2px;height:12px;"></div>
+          <div style="background:#1e293b;border-radius:2px;height:12px;"></div>
+          <div style="background:#1e293b;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#0ea5e9;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;"></div>
+          <div style="background:#334155;border-radius:2px;height:12px;border:1px solid #38bdf8;"></div>
+          <div style="background:#1e293b;border-radius:2px;height:12px;"></div>
+          <div style="background:#1e293b;border-radius:2px;height:12px;"></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:6px;">
+          <div style="display:flex;align-items:center;gap:3px;"><div style="width:8px;height:8px;background:#0ea5e9;border-radius:1px"></div><span style="color:#64748b;font-size:7px">Office day</span></div>
+          <div style="display:flex;align-items:center;gap:3px;"><div style="width:8px;height:8px;background:#f59e0b;border-radius:1px;opacity:.5"></div><span style="color:#64748b;font-size:7px">Holiday</span></div>
+          <div style="display:flex;align-items:center;gap:3px;"><div style="width:8px;height:8px;border-radius:1px;border:1px solid #38bdf8"></div><span style="color:#64748b;font-size:7px">Today</span></div>
+        </div>
+      </div>
+
+      <!-- Recs -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;">
+        <div style="background:#1e293b;border-radius:6px;padding:6px;text-align:center;border-top:2px solid #22c55e;">
+          <div style="font-size:12px">☀️</div>
+          <div style="color:#e2e8f0;font-size:8px;font-weight:600">Tue 26</div>
+          <div style="color:#4ade80;font-size:7px;font-weight:600">Go!</div>
+        </div>
+        <div style="background:#1e293b;border-radius:6px;padding:6px;text-align:center;border-top:2px solid #22c55e;">
+          <div style="font-size:12px">⛅</div>
+          <div style="color:#e2e8f0;font-size:8px;font-weight:600">Thu 28</div>
+          <div style="color:#4ade80;font-size:7px;font-weight:600">Go!</div>
+        </div>
+        <div style="background:#1e293b;border-radius:6px;padding:6px;text-align:center;border-top:2px solid #f59e0b;">
+          <div style="font-size:12px">🌧️</div>
+          <div style="color:#e2e8f0;font-size:8px;font-weight:600">Fri 29</div>
+          <div style="color:#fbbf24;font-size:7px;font-weight:600">Maybe</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Donut + Grid</h3>
+      <p>SVG donut chart paired with a 2×2 stat grid, then full-width heatmap + weather cards. More visual hierarchy, desktop-first feel.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:16px;">
+  <p class="subtitle" style="font-size:12px">
+    🎨 <strong>Color legend (both layouts):</strong>
+    &nbsp;<span style="color:#38bdf8">Blue</span> = office days &nbsp;·&nbsp;
+    <span style="color:#f59e0b">Amber</span> = holiday &nbsp;·&nbsp;
+    <span style="color:#4ade80">Green</span> = go-in recommendation &nbsp;·&nbsp;
+    <span style="color:#fb7185">Red chip</span> = days still needed
+  </p>
+</div>

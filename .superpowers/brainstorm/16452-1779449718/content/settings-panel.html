@@ -1,0 +1,131 @@
+<h2>Settings Panel Design</h2>
+<p class="subtitle">How should settings be presented? Slide-over drawer or inline panel?</p>
+
+<div class="cards">
+
+  <!-- Option A: Slide-over drawer -->
+  <div class="card" data-choice="drawer" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;padding:0;font-family:system-ui,sans-serif;border-radius:8px 8px 0 0;overflow:hidden;position:relative;min-height:220px;">
+
+      <!-- Dimmed dashboard behind -->
+      <div style="padding:12px;opacity:.3;">
+        <div style="background:#1e293b;border-radius:6px;height:24px;margin-bottom:8px;"></div>
+        <div style="display:grid;grid-template-columns:80px 1fr;gap:6px;margin-bottom:8px;">
+          <div style="background:#1e293b;border-radius:6px;height:60px;"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+            <div style="background:#1e293b;border-radius:4px;height:28px;"></div>
+            <div style="background:#1e293b;border-radius:4px;height:28px;"></div>
+            <div style="background:#1e293b;border-radius:4px;height:28px;"></div>
+            <div style="background:#fb7185;border-radius:4px;height:28px;opacity:.4;"></div>
+          </div>
+        </div>
+        <div style="background:#1e293b;border-radius:6px;height:50px;"></div>
+      </div>
+
+      <!-- Drawer overlay -->
+      <div style="position:absolute;top:0;right:0;bottom:0;width:65%;background:#1e293b;border-left:1px solid #334155;padding:14px;overflow:hidden;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <span style="color:#e2e8f0;font-size:11px;font-weight:600">Settings</span>
+          <span style="color:#64748b;font-size:16px;cursor:pointer">✕</span>
+        </div>
+
+        <div style="margin-bottom:10px;">
+          <div style="color:#64748b;font-size:8px;font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em">Target attendance</div>
+          <div style="background:#0f172a;border-radius:6px;padding:6px 8px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:#38bdf8;font-size:16px;font-weight:700">60%</span>
+            <div style="display:flex;gap:4px;">
+              <div style="background:#334155;border-radius:4px;padding:3px 7px;color:#94a3b8;font-size:10px">−</div>
+              <div style="background:#334155;border-radius:4px;padding:3px 7px;color:#94a3b8;font-size:10px">+</div>
+            </div>
+          </div>
+          <div style="background:#334155;border-radius:3px;height:3px;margin-top:4px;position:relative;">
+            <div style="background:#38bdf8;border-radius:3px;height:3px;width:60%"></div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:10px;">
+          <div style="color:#64748b;font-size:8px;font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em">Event keyword</div>
+          <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:6px 8px;color:#e2e8f0;font-size:10px">office</div>
+        </div>
+
+        <div style="margin-bottom:10px;">
+          <div style="color:#64748b;font-size:8px;font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em">Location (for weather)</div>
+          <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:6px 8px;color:#e2e8f0;font-size:10px">Bangalore, IN</div>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <div style="color:#64748b;font-size:8px;font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em">Country (for holidays)</div>
+          <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:6px 8px;color:#e2e8f0;font-size:10px;display:flex;justify-content:space-between;">
+            <span>India (IN)</span><span style="color:#64748b">▾</span>
+          </div>
+        </div>
+
+        <div style="background:#3b82f6;border-radius:6px;padding:7px;text-align:center;color:#fff;font-size:10px;font-weight:600">Save settings</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Slide-over drawer</h3>
+      <p>Settings slide in from the right, dimming the dashboard. Common pattern (Notion, Linear). Focused experience, easy to dismiss.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Inline settings page -->
+  <div class="card" data-choice="inline" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0f172a;padding:14px;font-family:system-ui,sans-serif;border-radius:8px 8px 0 0;">
+
+      <!-- Nav -->
+      <div style="background:#1e293b;border-radius:8px;padding:8px 12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="color:#94a3b8;font-size:11px;font-weight:600">OFFICE DAYS</span>
+        <div style="display:flex;gap:10px;">
+          <span style="color:#64748b;font-size:9px;padding:2px 6px;border-radius:4px;">Dashboard</span>
+          <span style="color:#38bdf8;font-size:9px;padding:2px 6px;border-radius:4px;background:#0f3460;">Settings</span>
+        </div>
+      </div>
+
+      <div style="color:#e2e8f0;font-size:11px;font-weight:600;margin-bottom:10px;">Settings</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:#1e293b;border-radius:8px;padding:10px;">
+          <div style="color:#64748b;font-size:7px;font-weight:600;margin-bottom:6px;text-transform:uppercase">Target %</div>
+          <div style="background:#0f172a;border-radius:6px;padding:6px 8px;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+            <span style="color:#38bdf8;font-size:14px;font-weight:700">60%</span>
+            <div style="display:flex;gap:3px;">
+              <div style="background:#334155;border-radius:3px;padding:2px 6px;color:#94a3b8;font-size:9px">−</div>
+              <div style="background:#334155;border-radius:3px;padding:2px 6px;color:#94a3b8;font-size:9px">+</div>
+            </div>
+          </div>
+          <div style="background:#334155;border-radius:3px;height:3px;">
+            <div style="background:#38bdf8;border-radius:3px;height:3px;width:60%"></div>
+          </div>
+        </div>
+
+        <div style="background:#1e293b;border-radius:8px;padding:10px;">
+          <div style="color:#64748b;font-size:7px;font-weight:600;margin-bottom:6px;text-transform:uppercase">Event keyword</div>
+          <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:6px 8px;color:#e2e8f0;font-size:10px">office</div>
+          <div style="color:#475569;font-size:7px;margin-top:4px">Matches calendar event titles</div>
+        </div>
+
+        <div style="background:#1e293b;border-radius:8px;padding:10px;">
+          <div style="color:#64748b;font-size:7px;font-weight:600;margin-bottom:6px;text-transform:uppercase">Location</div>
+          <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:6px 8px;color:#e2e8f0;font-size:10px">Bangalore, IN</div>
+          <div style="color:#475569;font-size:7px;margin-top:4px">Used for weather forecast</div>
+        </div>
+
+        <div style="background:#1e293b;border-radius:8px;padding:10px;">
+          <div style="color:#64748b;font-size:7px;font-weight:600;margin-bottom:6px;text-transform:uppercase">Country</div>
+          <div style="background:#0f172a;border:1px solid #334155;border-radius:6px;padding:6px 8px;color:#e2e8f0;font-size:10px;display:flex;justify-content:space-between;">
+            <span>India (IN)</span><span style="color:#64748b">▾</span>
+          </div>
+          <div style="color:#475569;font-size:7px;margin-top:4px">Public holidays source</div>
+        </div>
+      </div>
+
+      <div style="background:#3b82f6;border-radius:6px;padding:7px;text-align:center;color:#fff;font-size:10px;font-weight:600;margin-top:10px">Save settings</div>
+    </div>
+    <div class="card-body">
+      <h3>B — Separate settings page</h3>
+      <p>Settings live on their own route (/settings). No overlay, full-width form layout. Simpler to implement, clear navigation.</p>
+    </div>
+  </div>
+
+</div>

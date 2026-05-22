@@ -11,10 +11,12 @@ const fetcher = (url: string) => fetch(url).then(r => {
 })
 
 const COUNTRIES = [
+  { code: 'IE', name: 'Ireland' },
+  { code: 'GB', name: 'United Kingdom' },
   { code: 'IN', name: 'India' },
   { code: 'US', name: 'United States' },
-  { code: 'GB', name: 'United Kingdom' },
   { code: 'DE', name: 'Germany' },
+  { code: 'FR', name: 'France' },
   { code: 'AU', name: 'Australia' },
   { code: 'SG', name: 'Singapore' },
 ]

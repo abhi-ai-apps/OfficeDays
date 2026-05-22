@@ -7,7 +7,7 @@ import { UserSettings } from '@/lib/types'
 const DEFAULT_SETTINGS: UserSettings = {
   targetPct: 0.6,
   keyword: 'office',
-  country: 'IN',
+  country: 'IE',
   locationText: '',
   lat: null,
   lon: null,

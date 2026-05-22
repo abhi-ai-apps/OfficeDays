@@ -4,7 +4,8 @@ export function weatherScore(day: WeatherDay): number {
   let score = 100
   score -= day.precipProbability * 0.6   // precipProbability is 0–100; max 60 penalty
   if (day.tempMax > 38) score -= 20
-  if (day.weatherCode >= 80) score -= 40
+  if (day.weatherCode >= 80) score -= 40        // heavy rain / thunderstorm
+  else if (day.weatherCode >= 51) score -= 20   // drizzle / light-moderate rain
   return Math.max(0, score)
 }
 

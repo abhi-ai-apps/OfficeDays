@@ -16,6 +16,11 @@ describe('weatherScore', () => {
     expect(score).toBe(80) // 100 - 20
   })
 
+  it('penalises drizzle / light rain weather code', () => {
+    const score = weatherScore({ date: '2026-05-26', tempMax: 25, precipProbability: 0, weatherCode: 61 })
+    expect(score).toBe(80) // 100 - 20
+  })
+
   it('penalises storm weather code', () => {
     const score = weatherScore({ date: '2026-05-26', tempMax: 25, precipProbability: 0, weatherCode: 95 })
     expect(score).toBe(60) // 100 - 40
