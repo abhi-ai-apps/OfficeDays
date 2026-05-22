@@ -13,6 +13,7 @@ export function WeatherCard({ rec }: { rec: Recommendation }) {
       <div className={`text-xs font-bold mt-1.5 ${rec.recommended ? 'text-green-400' : 'text-slate-500'}`}>
         {rec.recommended ? 'Go! ✓' : 'Skip'}
       </div>
+      <div className="text-[10px] text-slate-500 mt-0.5">{Math.round(rec.score)}/100</div>
     </div>
   )
 }

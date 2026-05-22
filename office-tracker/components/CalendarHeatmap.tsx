@@ -52,11 +52,21 @@ export function CalendarHeatmap({ year, month, workingDays, attended, holidays, 
           <div
             key={i}
             className={[
-              'h-7 rounded',
+              'h-8 rounded flex items-center justify-center',
               day ? cellBg(day) : '',
               day && toISO(day) === today ? 'ring-2 ring-sky-400 ring-offset-1 ring-offset-slate-800' : '',
             ].join(' ')}
-          />
+          >
+            {day && (
+              <span className={`text-[10px] font-medium select-none ${
+                attendedSet.has(toISO(day)) ? 'text-white' :
+                holidaySet.has(toISO(day)) ? 'text-amber-100' :
+                'text-slate-400'
+              }`}>
+                {day}
+              </span>
+            )}
+          </div>
         ))}
       </div>
       <div className="flex gap-4 mt-3 flex-wrap">
