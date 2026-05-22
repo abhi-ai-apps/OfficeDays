@@ -68,25 +68,41 @@ export function CalendarHeatmap({ year, month, workingDays, attended, holidays, 
         ))}
       </div>
       <div className="grid grid-cols-7 gap-1">
-        {cells.map((day, i) => (
-          <div
-            key={i}
-            onClick={() => day && isClickable(day) && onToggleCompanyHoliday?.(toISO(day))}
-            title={day && isClickable(day) ? (companyHolidaySet.has(toISO(day)) ? 'Click to remove company holiday' : 'Click to mark as company holiday') : undefined}
-            className={[
-              'h-8 rounded flex items-center justify-center transition-opacity',
-              day ? cellBg(day) : '',
-              day && toISO(day) === today ? 'ring-2 ring-sky-400 ring-offset-1 ring-offset-slate-800' : '',
-              day && isClickable(day) ? 'cursor-pointer hover:opacity-80' : '',
-            ].join(' ')}
-          >
-            {day && (
-              <span className={`text-[10px] font-medium select-none ${textColor(day)}`}>
-                {day}
-              </span>
-            )}
-          </div>
-        ))}
+        {cells.map((day, i) => {
+          const clickable = day ? isClickable(day) : false
+          const iso = day ? toISO(day) : ''
+          const isCompanyHol = companyHolidaySet.has(iso)
+          const tooltipText = clickable
+            ? (isCompanyHol ? 'Remove company holiday' : 'Add company holiday')
+            : null
+
+          return (
+            <div
+              key={i}
+              onClick={() => clickable && onToggleCompanyHoliday?.(iso)}
+              className={[
+                'relative group h-8 rounded flex items-center justify-center transition-opacity',
+                day ? cellBg(day) : '',
+                day && toISO(day) === today ? 'ring-2 ring-sky-400 ring-offset-1 ring-offset-slate-800' : '',
+                clickable ? 'cursor-pointer hover:opacity-80' : '',
+              ].join(' ')}
+            >
+              {day && (
+                <span className={`text-[10px] font-medium select-none ${textColor(day)}`}>
+                  {day}
+                </span>
+              )}
+              {tooltipText && (
+                <div className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 z-10 hidden group-hover:block">
+                  <div className="bg-slate-900 text-slate-100 text-[10px] font-medium whitespace-nowrap rounded px-2 py-1 shadow-lg border border-slate-700">
+                    {tooltipText}
+                  </div>
+                  <div className="w-2 h-2 bg-slate-900 border-r border-b border-slate-700 rotate-45 mx-auto -mt-1" />
+                </div>
+              )}
+            </div>
+          )
+        })}
       </div>
       <div className="flex gap-4 mt-3 flex-wrap">
         <LegendItem color="bg-sky-500" label="Office" />
