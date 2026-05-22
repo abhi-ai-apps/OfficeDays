@@ -8,6 +8,7 @@ const rec: Recommendation = {
   tempMax: 28,
   precipProbability: 5,
   weatherCode: 0,
+  recommended: true,
 }
 
 describe('RecommendationStrip', () => {

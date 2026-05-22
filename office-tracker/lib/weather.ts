@@ -22,16 +22,24 @@ export function getWmoIcon(weatherCode: number): string {
 export function getRecommendations(
   remaining: string[],
   forecast: WeatherDay[],
-  count: number
+  stillNeeded: number
 ): Recommendation[] {
-  if (count <= 0) return []
+  if (remaining.length === 0) return []
   const forecastMap = new Map(forecast.map(f => [f.date, f]))
-  return remaining
+  const withScores = remaining
     .filter(d => forecastMap.has(d))
     .map(d => {
       const w = forecastMap.get(d)!
       return { date: d, score: weatherScore(w), tempMax: w.tempMax, precipProbability: w.precipProbability, weatherCode: w.weatherCode }
     })
-    .sort((a, b) => b.score - a.score)
-    .slice(0, count)
+
+  // Pick the best `stillNeeded` days by score to mark as recommended
+  const recommendedDates = new Set(
+    [...withScores].sort((a, b) => b.score - a.score).slice(0, stillNeeded).map(d => d.date)
+  )
+
+  // Return all days in chronological order with recommended flag
+  return withScores
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .map(d => ({ ...d, recommended: recommendedDates.has(d.date) }))
 }

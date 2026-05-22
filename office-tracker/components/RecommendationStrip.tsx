@@ -34,12 +34,19 @@ export function RecommendationStrip({ recommendations, stillNeeded, hasLocation 
     )
   }
 
+  const goCount = recommendations.filter(r => r.recommended).length
+
   return (
     <div>
-      <div className="text-xs font-semibold text-slate-400 mb-3 uppercase tracking-wider">
-        Recommended days (next 7 days)
+      <div className="flex items-baseline justify-between mb-3">
+        <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          Remaining days forecast
+        </div>
+        <div className="text-xs text-slate-500">
+          {goCount} Go · {recommendations.length - goCount} Skip
+        </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {recommendations.map(rec => (
           <WeatherCard key={rec.date} rec={rec} />
         ))}

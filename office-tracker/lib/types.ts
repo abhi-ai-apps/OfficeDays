@@ -40,4 +40,5 @@ export interface Recommendation {
   tempMax: number
   precipProbability: number
   weatherCode: number
+  recommended: boolean
 }
