@@ -19,7 +19,8 @@ describe('CalendarHeatmap', () => {
   it('renders legend items', () => {
     render(<CalendarHeatmap {...baseProps} />)
     expect(screen.getByText('Office')).toBeInTheDocument()
-    expect(screen.getByText('Holiday')).toBeInTheDocument()
+    expect(screen.getByText('Public holiday')).toBeInTheDocument()
+    expect(screen.getByText('Company holiday')).toBeInTheDocument()
     expect(screen.getByText('Today')).toBeInTheDocument()
   })
 

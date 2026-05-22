@@ -4,14 +4,17 @@ interface Props {
   workingDays: string[]
   attended: string[]
   holidays: string[]
+  companyHolidays?: string[]
   today: string
+  onToggleCompanyHoliday?: (date: string) => void
 }
 
 const DAY_LABELS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
 
-export function CalendarHeatmap({ year, month, workingDays, attended, holidays, today }: Props) {
+export function CalendarHeatmap({ year, month, workingDays, attended, holidays, companyHolidays = [], today, onToggleCompanyHoliday }: Props) {
   const attendedSet = new Set(attended)
   const holidaySet = new Set(holidays)
+  const companyHolidaySet = new Set(companyHolidays)
   const workingSet = new Set(workingDays)
 
   const firstDow = (new Date(year, month - 1, 1).getDay() + 6) % 7  // Mon=0
@@ -28,9 +31,26 @@ export function CalendarHeatmap({ year, month, workingDays, attended, holidays, 
     const iso = toISO(day)
     if (attendedSet.has(iso)) return 'bg-sky-500'
     if (holidaySet.has(iso)) return 'bg-amber-500 opacity-60'
+    if (companyHolidaySet.has(iso)) return 'bg-violet-500 opacity-80'
     const dow = new Date(iso + 'T12:00:00').getDay()
     if (dow === 0 || dow === 6) return 'bg-slate-900'
     return 'bg-slate-700'
+  }
+
+  const isClickable = (day: number) => {
+    const iso = toISO(day)
+    if (holidaySet.has(iso)) return false        // can't override public holidays
+    if (attendedSet.has(iso)) return false        // already attended
+    const dow = new Date(iso + 'T12:00:00').getDay()
+    return dow !== 0 && dow !== 6                 // only weekdays
+  }
+
+  const textColor = (day: number) => {
+    const iso = toISO(day)
+    if (attendedSet.has(iso)) return 'text-white'
+    if (holidaySet.has(iso)) return 'text-amber-100'
+    if (companyHolidaySet.has(iso)) return 'text-violet-100'
+    return 'text-slate-400'
   }
 
   const monthName = new Date(year, month - 1, 1).toLocaleString('default', { month: 'long' })
@@ -51,18 +71,17 @@ export function CalendarHeatmap({ year, month, workingDays, attended, holidays, 
         {cells.map((day, i) => (
           <div
             key={i}
+            onClick={() => day && isClickable(day) && onToggleCompanyHoliday?.(toISO(day))}
+            title={day && isClickable(day) ? (companyHolidaySet.has(toISO(day)) ? 'Click to remove company holiday' : 'Click to mark as company holiday') : undefined}
             className={[
-              'h-8 rounded flex items-center justify-center',
+              'h-8 rounded flex items-center justify-center transition-opacity',
               day ? cellBg(day) : '',
               day && toISO(day) === today ? 'ring-2 ring-sky-400 ring-offset-1 ring-offset-slate-800' : '',
+              day && isClickable(day) ? 'cursor-pointer hover:opacity-80' : '',
             ].join(' ')}
           >
             {day && (
-              <span className={`text-[10px] font-medium select-none ${
-                attendedSet.has(toISO(day)) ? 'text-white' :
-                holidaySet.has(toISO(day)) ? 'text-amber-100' :
-                'text-slate-400'
-              }`}>
+              <span className={`text-[10px] font-medium select-none ${textColor(day)}`}>
                 {day}
               </span>
             )}
@@ -71,12 +90,16 @@ export function CalendarHeatmap({ year, month, workingDays, attended, holidays, 
       </div>
       <div className="flex gap-4 mt-3 flex-wrap">
         <LegendItem color="bg-sky-500" label="Office" />
-        <LegendItem color="bg-amber-500 opacity-60" label="Holiday" />
+        <LegendItem color="bg-amber-500 opacity-60" label="Public holiday" />
+        <LegendItem color="bg-violet-500 opacity-80" label="Company holiday" />
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded ring-2 ring-sky-400" />
           <span className="text-[10px] text-slate-500">Today</span>
         </div>
       </div>
+      {onToggleCompanyHoliday && (
+        <p className="text-[10px] text-slate-600 mt-2">Click any weekday to mark/unmark as company holiday</p>
+      )}
     </div>
   )
 }

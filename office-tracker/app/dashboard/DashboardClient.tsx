@@ -34,6 +34,19 @@ export function DashboardClient() {
     settings?.lat && settings?.lon ? `/api/weather?lat=${settings.lat}&lon=${settings.lon}` : null,
     fetcher
   )
+  const { data: companyHolidays, mutate: mutateCompanyHolidays } = useSWR<string[]>(
+    '/api/company-holidays',
+    fetcher
+  )
+
+  async function toggleCompanyHoliday(date: string) {
+    await fetch('/api/company-holidays', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date }),
+    })
+    mutateCompanyHolidays()
+  }
 
   if (settingsErr || holidaysErr || eventsErr) {
     return (
@@ -48,7 +61,11 @@ export function DashboardClient() {
 
   if (!settings || !holidays || !events) return <DashboardSkeleton />
 
-  const stats = computeStats(year, month, events, holidays, settings.targetPct, today)
+  const allHolidays = [
+    ...holidays,
+    ...(companyHolidays ?? []).map(date => ({ date, localName: 'Company Holiday' })),
+  ]
+  const stats = computeStats(year, month, events, allHolidays, settings.targetPct, today)
   const recs = forecast ? getRecommendations(stats.remaining, forecast, stats.stillNeeded) : []
 
   return (
@@ -68,7 +85,9 @@ export function DashboardClient() {
         workingDays={stats.workingDays}
         attended={stats.attended}
         holidays={holidays.map(h => h.date)}
+        companyHolidays={companyHolidays ?? []}
         today={today}
+        onToggleCompanyHoliday={toggleCompanyHoliday}
       />
       {stats.attendedCount === 0 && (
         <p className="text-xs text-slate-500 text-center -mt-2">
