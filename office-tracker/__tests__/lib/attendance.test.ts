@@ -57,8 +57,8 @@ describe('computeStats', () => {
     expect(stats.stillNeeded).toBe(0)
   })
 
-  it('remaining only includes days after today', () => {
+  it('remaining includes today and future working days only', () => {
     const stats = computeStats(2026, 5, events, holidays, 0.6, today)
-    expect(stats.remaining.every(d => d > today)).toBe(true)
+    expect(stats.remaining.every(d => d >= today)).toBe(true)
   })
 })

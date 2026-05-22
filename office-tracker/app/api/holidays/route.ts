@@ -23,7 +23,11 @@ export async function GET(req: NextRequest) {
   if (!/^[A-Z]{2}$/.test(country)) {
     return NextResponse.json({ error: 'country must be a 2-letter ISO code' }, { status: 400 })
   }
-  const year = Number(searchParams.get('year') ?? new Date().getFullYear())
+  const yearParam = searchParams.get('year')
+  const year = yearParam ? Number(yearParam) : new Date().getFullYear()
+  if (!Number.isInteger(year) || year < 2000 || year > 2100) {
+    return NextResponse.json({ error: 'year must be an integer between 2000 and 2100' }, { status: 400 })
+  }
 
   const getCached = unstable_cache(
     () => fetchHolidays(country, year),

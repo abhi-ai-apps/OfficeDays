@@ -36,6 +36,6 @@ export function computeStats(
   const attendancePct = workingDays.length > 0 ? attendedCount / workingDays.length : 0
   const targetCount = Math.ceil(targetPct * workingDays.length)
   const stillNeeded = Math.max(0, targetCount - attendedCount)
-  const remaining = workingDays.filter(d => d > today)
+  const remaining = workingDays.filter(d => d >= today)
   return { workingDays, attended, attendedCount, attendancePct, targetCount, stillNeeded, remaining }
 }

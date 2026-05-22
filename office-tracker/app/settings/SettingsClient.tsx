@@ -5,7 +5,10 @@ import { useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 import { UserSettings } from '@/lib/types'
 
-const fetcher = (url: string) => fetch(url).then(r => r.json())
+const fetcher = (url: string) => fetch(url).then(r => {
+  if (!r.ok) throw new Error(r.statusText)
+  return r.json()
+})
 
 const COUNTRIES = [
   { code: 'IN', name: 'India' },
@@ -22,6 +25,7 @@ export function SettingsClient() {
   const [form, setForm] = useState<UserSettings | null>(null)
   const [locationText, setLocationText] = useState('')
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
 
   useEffect(() => {
     if (settings && !form) {
@@ -43,29 +47,34 @@ export function SettingsClient() {
   async function handleSave() {
     if (!form) return
     setSaving(true)
+    setSaveError(null)
+    try {
+      let lat = form.lat
+      let lon = form.lon
 
-    let lat = form.lat
-    let lon = form.lon
-
-    if (locationText !== form.locationText && locationText.trim()) {
-      const geo = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(locationText)}&count=1`
-      ).then(r => r.json())
-      if (geo.results?.[0]) {
-        lat = geo.results[0].latitude
-        lon = geo.results[0].longitude
+      if (locationText !== form.locationText && locationText.trim()) {
+        const geo = await fetch(
+          `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(locationText)}&count=1`
+        ).then(r => r.json())
+        if (geo.results?.[0]) {
+          lat = geo.results[0].latitude
+          lon = geo.results[0].longitude
+        }
       }
-    }
 
-    const updated: UserSettings = { ...form, locationText, lat, lon }
-    await fetch('/api/settings', {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updated),
-    })
-    await mutate()
-    setSaving(false)
-    router.push('/dashboard')
+      const updated: UserSettings = { ...form, locationText, lat, lon }
+      await fetch('/api/settings', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated),
+      })
+      await mutate()
+      router.push('/dashboard')
+    } catch {
+      setSaveError('Failed to save. Please try again.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   const inputClass = 'bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-sm text-slate-100 w-44 focus:outline-none focus:border-blue-500'
@@ -147,6 +156,9 @@ export function SettingsClient() {
         </div>
       </div>
 
+      {saveError && (
+        <p className="text-sm text-rose-400 text-right">{saveError}</p>
+      )}
       <div className="flex justify-end gap-3 pt-2">
         <button
           type="button"
