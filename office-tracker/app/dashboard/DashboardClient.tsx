@@ -26,7 +26,7 @@ export function DashboardClient() {
     settings ? `/api/holidays?country=${settings.country}&year=${year}` : null,
     fetcher
   )
-  const { data: events, error: eventsErr } = useSWR<CalendarEvent[]>(
+  const { data: events, error: eventsErr, mutate: mutateEvents, isValidating: syncingEvents } = useSWR<CalendarEvent[]>(
     settings ? `/api/calendar?month=${monthStr}&keyword=${encodeURIComponent(settings.keyword)}` : null,
     fetcher
   )
@@ -70,6 +70,31 @@ export function DashboardClient() {
 
   return (
     <main className="max-w-2xl mx-auto p-6 space-y-4">
+      <div className="flex justify-end">
+        <button
+          onClick={() => mutateEvents()}
+          disabled={syncingEvents}
+          title="Sync with Google Calendar"
+          className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-100 disabled:opacity-50 transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={`w-3.5 h-3.5 ${syncingEvents ? 'animate-spin' : ''}`}
+          >
+            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+            <path d="M3 3v5h5" />
+            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+            <path d="M16 16h5v5" />
+          </svg>
+          {syncingEvents ? 'Syncing…' : 'Sync calendar'}
+        </button>
+      </div>
       <div className="flex flex-col sm:flex-row items-center gap-4 bg-slate-800 rounded-xl p-4">
         <AttendanceDonut attendancePct={stats.attendancePct} targetPct={settings.targetPct} />
         <StatGrid
