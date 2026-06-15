@@ -9,8 +9,16 @@ import { computeStats } from '@/lib/attendance'
 import { getRecommendations } from '@/lib/weather'
 import { UserSettings, CalendarEvent, Holiday, WeatherDay } from '@/lib/types'
 
+class FetchError extends Error {
+  status: number
+  constructor(status: number) {
+    super('fetch failed')
+    this.status = status
+  }
+}
+
 const fetcher = (url: string) => fetch(url).then(r => {
-  if (!r.ok) throw new Error('fetch failed')
+  if (!r.ok) throw new FetchError(r.status)
   return r.json()
 })
 
@@ -48,12 +56,31 @@ export function DashboardClient() {
     mutateCompanyHolidays()
   }
 
+  const isAuthError = [settingsErr, holidaysErr, eventsErr].some(
+    e => e instanceof FetchError && e.status === 401
+  )
+
   if (settingsErr || holidaysErr || eventsErr) {
     return (
       <main className="max-w-2xl mx-auto p-6">
         <div className="bg-slate-800 rounded-xl p-6 text-center text-slate-400">
-          <p className="font-medium text-slate-200 mb-1">Something went wrong</p>
-          <p className="text-sm">Try refreshing the page. If the problem persists, sign out and back in.</p>
+          {isAuthError ? (
+            <>
+              <p className="font-medium text-slate-200 mb-1">Session expired</p>
+              <p className="text-sm mb-3">Your Google login has expired. Sign out and back in to continue.</p>
+              <a
+                href="/api/auth/signout"
+                className="inline-block text-sm px-4 py-1.5 rounded-md bg-blue-700 text-white hover:bg-blue-600 transition-colors"
+              >
+                Sign out &amp; reconnect
+              </a>
+            </>
+          ) : (
+            <>
+              <p className="font-medium text-slate-200 mb-1">Something went wrong</p>
+              <p className="text-sm">Try refreshing the page. If the problem persists, sign out and back in.</p>
+            </>
+          )}
         </div>
       </main>
     )
